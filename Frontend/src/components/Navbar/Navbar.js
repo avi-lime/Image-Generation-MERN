@@ -1,17 +1,18 @@
 import React, { useContext } from 'react'
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom'
-import PointsContext from '../context/PointsContext'
+import PointsContext from '../../context/PointsContext'
 
 const Navbar = (props) => {
     const activeStyle = {
-        color: 'red',
         textDecoration: 'underline'
     }
     const navigate = useNavigate()
+    const ctx = useContext(PointsContext)
 
     const logout = () => {
-        localStorage.removeItem('authToken')
+        ctx.removeCookie('token')
+        ctx.removeCookie('user')
         ctx.setIsLoggedIn(false)
         navigate('/login')
     }
@@ -25,18 +26,17 @@ const Navbar = (props) => {
     // }
 
     const links = [
-        { key: 'home', url: '/', name: 'Home' },
-        { key: 'image', url: '/image-generator', name: 'Image Generator' },
+        { key: 'image', url: '/image-generator', name: 'Generator' },
         { key: 'history', url: '/history', name: 'History' }
     ]
 
-    const ctx = useContext(PointsContext)
 
     return (
         <div className='header-container'>
             <div className='left'>
+                <Link className='logo' to='/'>Img-Maestro</Link>
                 {
-                    links.map(link => {
+                    ctx.isLoggedIn && links.map(link => {
                         return (
                             <Link key={link.key} style={props.page === link.key ? activeStyle : {}} to={link.url}>{link.name}</Link>
                         )
@@ -55,15 +55,14 @@ const Navbar = (props) => {
                 {
                     ctx.isLoggedIn ?
                         <>
-
                             <div className='right' style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '20px' }}>
                                 {ctx.userPoints}
                             </div>
                             <button onClick={logout}>Logout</button>
                         </> :
 
-                        <button class="cta" onClick={() => navigate('/login')}>
-                            <span>Register</span>
+                        <button className="cta" onClick={() => navigate('/login')}>
+                            <span>Login</span>
                             <svg width="15px" height="10px" viewBox="0 0 13 10">
                                 <path d="M1,5 L11,5"></path>
                                 <polyline points="8 1 12 5 8 9"></polyline>
