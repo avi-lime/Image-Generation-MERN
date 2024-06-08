@@ -57,18 +57,25 @@ const signup = async (req, res) => {
             .json({
                 message: 'Email and password are required'
             })
+        return
     }
     try {
         const hashedPassword = await hashPassword(password)
         const newUser = await User.create({ email, password: hashedPassword })
 
-        res.status(200)
+        return res.status(200)
             .json({
                 data: newUser,
                 message: 'User signed up successfully'
             })
     } catch (e) {
-        res.status(400)
+        if (e.code === 11000) {
+            return res.status(400)
+                .json({
+                    message: 'User already exists'
+                })
+        }
+        return res.status(400)
             .json({
                 message: e.message
             })
