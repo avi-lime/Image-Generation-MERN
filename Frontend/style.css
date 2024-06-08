@@ -8,8 +8,17 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: #121212;
     min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
     /* margin: -20px 0 50px; */
+}
+
+#root {
+    height: 100vh;
 }
