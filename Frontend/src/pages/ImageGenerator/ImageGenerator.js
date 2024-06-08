@@ -32,7 +32,6 @@ const ImageGenerator = () => {
             setData(d.data.imageUrl)
             ctx.setUserPoints(d.data.tokens)
             ctx.setCookie('points', d.data.tokens)
-
         }
     }
 
