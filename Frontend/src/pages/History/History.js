@@ -34,7 +34,7 @@ const History = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar page='history' />
             <div className='history-container'>
                 <input placeholder="Search" className="input" onChange={(e) => setSearch(e.target.value)} type="text" />
 
