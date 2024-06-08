@@ -1,9 +1,14 @@
 require('dotenv').config();
 const imageModel = require('../models/imageModel');
 const userModel = require('../models/userModel');
+const cloudinary = require('cloudinary');
 
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
 const generateImage = async (req, res) => {
-    console.log(req.body)
     const { searchText, userId } = req.body
     let imageUrl = ""
     let user = await userModel.findOne({ _id: userId });
@@ -31,6 +36,15 @@ const generateImage = async (req, res) => {
         })
     }
     try {
+        await cloudinary.v2.uploader.upload(imageUrl, async (error, result) => {
+            if (error) {
+                res.status(400).json({
+                    status: 'fail',
+                    message: 'Failed to upload image'
+                })
+            }
+            imageUrl = result.secure_url
+        })
 
         const image = new imageModel({
             query: searchText,
@@ -61,8 +75,7 @@ const generateImage = async (req, res) => {
 
 const getImages = async (req, res) => {
     const { userId } = req.params
-    const images = await imageModel.find({ userId }).sort({ createdAt: -1 })
-    console.log(images, userId)
+    const images = await imageModel.find({ userId }).sort({ _id: -1 })
     res.status(200).json({
         status: 'success',
         message: 'GET Request to /api/v1/images',

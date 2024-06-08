@@ -4,15 +4,15 @@ import './HistoryCard.css'
 const HistoryCard = (props) => {
     const item = props.item
     return (
-        <article class="card">
-            <div class="card-img">
-                <img src={item.imageUrl} class="card-imgs pv"></img>
+        <article className="card">
+            <div className="card-img">
+                <img src={item.imageUrl} className="card-imgs pv"></img>
             </div>
 
-            <div class="project-info">
-                <div class="flex">
-                    <div class="project-title">{item.query}</div>
-                    <span class="tag">{new Date(item.createdAt).toLocaleDateString()}</span>
+            <div className="project-info">
+                <div className="flex">
+                    <div className="project-title">{item.query}</div>
+                    <span className="tag">{new Date(item.createdAt).toLocaleDateString()}</span>
                 </div>
             </div>
         </article>
