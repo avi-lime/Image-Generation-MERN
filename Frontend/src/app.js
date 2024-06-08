@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
@@ -17,13 +17,16 @@ const App = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['user', 'token', 'points'])
 
     const [isLoggedIn, setIsLoggedIn] = useState(() => cookies.token ? true : false)
-    const [userPoints, setUserPoints] = useState(() => cookies.points ? cookies.points : 0)
+    const [userPoints, setUserPoints] = useState()
+    useEffect(() => {
+        setUserPoints(cookies.points)
+    }, [cookies.points])
 
 
     const router = createBrowserRouter([
         {
             path: '/',
-            element: <Home />
+            element: !isLoggedIn ? <Home /> : <Navigate to='/image-generator' />
         },
         {
             path: '/image-generator',
