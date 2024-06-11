@@ -24,7 +24,6 @@ const ImageGenerator = () => {
                 "Authorization": "Bearer " + ctx.cookies.token
             }
         });
-        console.log("ok")
         const d = await res.json();
         console.log(d)
 

@@ -53,7 +53,9 @@ const generateImage = async (req, res) => {
         })
         await image.save()
 
-        user = await userModel.findOneAndUpdate({ _id: userId }, { $inc: { tokens: -1 } })
+        user = await userModel.findOne({ _id: userId })
+        user.tokens -= 1
+        user.save();
     } catch (e) {
         console.log(e)
         res.status(400).json({
@@ -61,7 +63,7 @@ const generateImage = async (req, res) => {
             message: 'Failed to save image'
         })
     }
-
+    console.log(user.tokens);
     res.status(200).json({
         status: 'success',
         message: 'POST Request to /api/v1/images',
