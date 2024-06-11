@@ -76,7 +76,7 @@ const SignUp = () => {
                         color: 'red',
                         textAlign: 'center'
                     }}>{error}</p>}
-                    <button className="button-submit" onClick={(e) => signUp(e)}>Sign In</button>
+                    <button className="button-submit" onClick={(e) => signUp(e)}>Sign Up</button>
                     <p className="p">Already have an account? <Link to='/login' className="span">Login</Link></p>
                 </form>
             </div>
