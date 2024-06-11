@@ -12,7 +12,7 @@ const History = () => {
 
     const getData = async () => {
         try {
-            const response = await fetch(`http://localhost:1010/api/v1/images/${ctx.cookies.user}`, {
+            const response = await fetch(`${process.env.BACKEND_URL}/api/v1/images/${ctx.cookies.user}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
