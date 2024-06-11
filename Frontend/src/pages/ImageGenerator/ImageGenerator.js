@@ -13,7 +13,7 @@ const ImageGenerator = () => {
 
     const getData = async () => {
         if (!searchText) return
-        const res = await fetch(`http://localhost:1010/api/v1/images`, {
+        const res = await fetch(`${process.env.BACKEND_URL}/api/v1/images`, {
             method: 'POST',
             body: JSON.stringify({
                 searchText,
